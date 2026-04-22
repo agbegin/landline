@@ -270,7 +270,19 @@
   Inspired by <a href="https://tech.chrishardie.com/2025/landline-phone-kids/" target="_blank">Chris Hardie</a><br>
   <span style="font-size: 11px;">This page runs in your browser — credentials go directly to voip.ms, nowhere else.</span>
   <div style="margin-top: 14px;">
-    <a href="lightning:bufftiger1@primal.net" style="display: inline-block; padding: 6px 14px; border: 1px solid var(--border); border-radius: 5px; font-size: 12px; font-family: 'IBM Plex Mono', monospace; color: var(--fg); text-decoration: none;">⚡ Send a tip</a>
+    <a id="tip-btn" href="lightning:bufftiger1@primal.net" style="display: inline-block; padding: 6px 14px; border: 1px solid var(--border); border-radius: 5px; font-size: 12px; font-family: 'IBM Plex Mono', monospace; color: var(--fg); text-decoration: none; cursor: pointer;">⚡ Tip sats</a>
+    <div id="tip-fallback" style="display:none; margin-top: 12px; padding: 12px; background: var(--card); border: 1px solid var(--border); border-radius: 6px; text-align: center;">
+      <p style="font-size: 13px; margin-bottom: 8px; color: var(--fg);">Send sats to:</p>
+      <code style="font-size: 14px; padding: 4px 10px; user-select: all;">bufftiger1@primal.net</code>
+      <p style="font-size: 11px; margin-top: 8px;">Copy this Lightning address into any wallet (Phoenix, WoS, Primal, Strike, Cash App, etc.)</p>
+    </div>
+    <script>
+    document.getElementById('tip-btn').addEventListener('click', function(e) {
+      // Try lightning: protocol — if browser doesn't handle it, show the fallback
+      var fallback = document.getElementById('tip-fallback');
+      setTimeout(function() { fallback.style.display = 'block'; }, 1500);
+    });
+    </script>
   </div>
 </div>
 
