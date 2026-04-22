@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kids Landline — Set Up a Real Phone in 15 Minutes</title>
+<style>
+  :root { --bg: #fafaf8; --fg: #1a1a1a; --muted: #6b6b6b; --border: #e0e0dc; --accent: #2563eb; --green: #16a34a; --card: #fff; --code-bg: #f3f4f6; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #111; --fg: #e5e5e3; --muted: #8e8e8e; --border: #2a2a2a; --accent: #6ba1ff; --green: #4ade80; --card: #1a1a1a; --code-bg: #1e1e1e; } }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--fg); line-height: 1.6; }
+  .container { max-width: 640px; margin: 0 auto; padding: 48px 20px 80px; }
+  h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
+  h2 { font-size: 18px; font-weight: 600; margin: 40px 0 12px; padding-top: 20px; border-top: 1px solid var(--border); }
+  h3 { font-size: 15px; font-weight: 600; margin: 20px 0 8px; }
+  p, li { font-size: 15px; color: var(--muted); margin-bottom: 8px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .subtitle { font-size: 16px; color: var(--muted); margin-bottom: 32px; }
+  .step { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin: 16px 0; }
+  .step-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .step-num { background: var(--fg); color: var(--bg); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .step-title { font-size: 15px; font-weight: 600; color: var(--fg); }
+  .step p { margin: 4px 0; }
+  .auto-badge { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; background: rgba(22,163,74,0.1); color: var(--green); margin-left: 8px; }
+  .manual-badge { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; background: rgba(37,99,235,0.1); color: var(--accent); margin-left: 8px; }
+  .product { display: flex; gap: 16px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .product:last-child { border-bottom: none; }
+  .product-info { flex: 1; }
+  .product-name { font-size: 14px; font-weight: 600; color: var(--fg); }
+  .product-desc { font-size: 13px; color: var(--muted); }
+  .product-price { font-size: 14px; font-weight: 600; color: var(--fg); white-space: nowrap; }
+  code { font-family: 'SF Mono', Menlo, monospace; font-size: 13px; background: var(--code-bg); padding: 2px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 16px; border-radius: 6px; overflow-x: auto; margin: 12px 0; font-size: 13px; line-height: 1.5; }
+  pre code { background: none; padding: 0; }
+  .form-group { margin: 12px 0; }
+  .form-group label { display: block; font-size: 13px; font-weight: 500; color: var(--fg); margin-bottom: 4px; }
+  .form-group input, .form-group select { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--fg); font-size: 14px; font-family: inherit; }
+  .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--accent); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  button.primary { background: var(--fg); color: var(--bg); border: none; padding: 10px 20px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; width: 100%; margin-top: 8px; }
+  button.primary:hover { opacity: 0.85; }
+  button.primary:disabled { opacity: 0.4; cursor: not-allowed; }
+  .result { margin-top: 12px; padding: 12px; border-radius: 6px; font-size: 13px; font-family: 'SF Mono', monospace; }
+  .result.success { background: rgba(22,163,74,0.1); color: var(--green); }
+  .result.error { background: rgba(220,38,38,0.1); color: #dc2626; }
+  .result.info { background: var(--code-bg); color: var(--muted); }
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { padding: 6px 0; padding-left: 24px; position: relative; font-size: 14px; }
+  .checklist li::before { content: '○'; position: absolute; left: 0; color: var(--muted); }
+  .checklist li.done::before { content: '✓'; color: var(--green); }
+  .cost-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+  .cost-table th, .cost-table td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+  .cost-table th { font-weight: 600; color: var(--fg); }
+  .total { font-weight: 700; color: var(--fg); }
+  .warning { background: rgba(234,179,8,0.1); border: 1px solid rgba(234,179,8,0.3); border-radius: 6px; padding: 12px; margin: 12px 0; font-size: 13px; color: var(--fg); }
+  .hidden { display: none; }
+  #progress { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--border); padding: 12px 0; margin-bottom: 20px; z-index: 10; }
+  #progress-bar { display: flex; gap: 4px; }
+  .prog-dot { width: 100%; height: 4px; border-radius: 2px; background: var(--border); }
+  .prog-dot.active { background: var(--green); }
+  .prog-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Kids Landline</h1>
+<p class="subtitle">Give your kid a real phone number on a real phone. No screen. No apps. No infinite scroll. $62 in hardware, ~$5/month. Takes about 15 minutes.</p>
+
+<div id="progress">
+  <div id="progress-bar">
+    <div class="prog-dot" id="prog-1"></div>
+    <div class="prog-dot" id="prog-2"></div>
+    <div class="prog-dot" id="prog-3"></div>
+    <div class="prog-dot" id="prog-4"></div>
+    <div class="prog-dot" id="prog-5"></div>
+    <div class="prog-dot" id="prog-6"></div>
+  </div>
+  <div class="prog-label" id="prog-label">Step 1 of 6 — Shopping list</div>
+</div>
+
+<!-- ===== STEP 1: SHOPPING LIST ===== -->
+<h2>What You Need</h2>
+
+<div class="product">
+  <div class="product-info">
+    <div class="product-name">Grandstream HT802</div>
+    <div class="product-desc">2-port analog telephone adapter. Turns your internet into a phone line.</div>
+  </div>
+  <div class="product-price"><a href="https://www.amazon.com/dp/B01JH7MWKM" target="_blank">$46 →</a></div>
+</div>
+<div class="product">
+  <div class="product-info">
+    <div class="product-name">Push-button phone</div>
+    <div class="product-desc">Any cheap corded phone. Not a VoIP phone — just a regular one. <a href="https://www.amazon.com/dp/B005GM6V1U" target="_blank">Example: $14</a></div>
+  </div>
+  <div class="product-price">~$14</div>
+</div>
+<div class="product">
+  <div class="product-info">
+    <div class="product-name">Ethernet cable</div>
+    <div class="product-desc">To connect the Grandstream to your router. You probably have one.</div>
+  </div>
+  <div class="product-price">$0–8</div>
+</div>
+<div class="product">
+  <div class="product-info">
+    <div class="product-name">VoIP.ms account</div>
+    <div class="product-desc">The phone service. Pay-as-you-go. Add $10 to start.</div>
+  </div>
+  <div class="product-price"><a href="https://voip.ms" target="_blank">voip.ms →</a></div>
+</div>
+
+<table class="cost-table">
+  <tr><th>Item</th><th>One-time</th><th>Monthly</th></tr>
+  <tr><td>Hardware</td><td>~$62</td><td>—</td></tr>
+  <tr><td>Phone number (DID)</td><td>$0.40</td><td>$0.85</td></tr>
+  <tr><td>E911 (optional, recommended)</td><td>$1.50</td><td>$1.50</td></tr>
+  <tr><td>Call minutes</td><td>—</td><td>~$1–3</td></tr>
+  <tr class="total"><td>Total</td><td>~$64</td><td>~$3–5</td></tr>
+</table>
+
+<!-- ===== STEP 2: VOIP.MS ACCOUNT ===== -->
+<h2>Step 1 — VoIP.ms Account</h2>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-num">1</div>
+    <div class="step-title">Create your account</div>
+  </div>
+  <p>Go to <a href="https://voip.ms/en/signup" target="_blank">voip.ms/signup</a> and create an account. Enable two-factor authentication. Add $10 in funds.</p>
+  <p>Then enable API access: go to <strong>Main Menu → SOAP and REST/JSON API</strong>, set a password, and whitelist your IP address (or set to "allow all" temporarily for this setup).</p>
+</div>
+
+<!-- ===== STEP 3: API AUTOMATION ===== -->
+<h2>Step 2 — Set Up Your Phone Line<span class="auto-badge">Automated</span></h2>
+
+<p>Enter your VoIP.ms credentials below. Everything runs client-side — nothing is sent to any server except voip.ms directly.</p>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-num">2</div>
+    <div class="step-title">Connect to VoIP.ms API</div>
+  </div>
+  <div class="form-row">
+    <div class="form-group">
+      <label>VoIP.ms email (API username)</label>
+      <input type="email" id="api-user" placeholder="you@email.com">
+    </div>
+    <div class="form-group">
+      <label>API password</label>
+      <input type="password" id="api-pass" placeholder="Your API password (not login password)">
+    </div>
+  </div>
+  <button class="primary" id="btn-test-api" onclick="testApi()">Test Connection</button>
+  <div id="api-result" class="result hidden"></div>
+</div>
+
+<div id="section-setup" class="hidden">
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-num">3</div>
+    <div class="step-title">Pick a server &amp; phone number</div>
+  </div>
+  <div class="form-group">
+    <label>Server (pick one near you)</label>
+    <select id="server-select"><option value="">Loading servers...</option></select>
+  </div>
+  <div class="form-group">
+    <label>Area code</label>
+    <input type="text" id="area-code" placeholder="e.g. 212, 415, 305" maxlength="3">
+  </div>
+  <button class="primary" id="btn-search-dids" onclick="searchDids()">Search Available Numbers</button>
+  <div id="did-results" class="hidden">
+    <div class="form-group">
+      <label>Pick a number</label>
+      <select id="did-select"></select>
+    </div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-num">4</div>
+    <div class="step-title">Create phone line</div>
+  </div>
+  <p>This will: create a sub-account, order your phone number, set up voicemail, and configure routing — all in one click.</p>
+  <div class="form-row">
+    <div class="form-group">
+      <label>Kid's name (for the line)</label>
+      <input type="text" id="kid-name" placeholder="e.g. Sam">
+    </div>
+    <div class="form-group">
+      <label>Voicemail email</label>
+      <input type="email" id="vm-email" placeholder="parent@email.com">
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Sub-account password (make one up, you'll need it for the Grandstream)</label>
+    <input type="text" id="sub-pass" placeholder="e.g. MyKidsPhone2026!">
+  </div>
+  <button class="primary" id="btn-create-line" onclick="createLine()">Create Phone Line</button>
+  <div id="create-result" class="result hidden"></div>
+</div>
+
+</div><!-- /section-setup -->
+
+<!-- ===== STEP 4: GRANDSTREAM ===== -->
+<div id="section-grandstream" class="hidden">
+<h2>Step 3 — Configure the Grandstream<span class="manual-badge">Hands-on</span></h2>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-num">5</div>
+    <div class="step-title">Find the Grandstream's IP address</div>
+  </div>
+  <ol style="padding-left: 20px; font-size: 14px; color: var(--muted);">
+    <li>Plug the Grandstream into your router with an ethernet cable and power it on</li>
+    <li>Plug the phone into <strong>Phone Port 1</strong> (the port closest to the power jack)</li>
+    <li>Pick up the phone and dial <code>***</code> then <code>02</code></li>
+    <li>A robot voice will read the IP address — write it down (e.g. <code>192.168.1.105</code>)</li>
+  </ol>
+  <div class="form-group" style="margin-top: 12px;">
+    <label>Enter the IP address</label>
+    <input type="text" id="gs-ip" placeholder="192.168.1.xxx">
+  </div>
+  <button class="primary" onclick="showGrandstreamConfig()">Generate Config Instructions</button>
+</div>
+
+<div id="gs-config" class="hidden">
+<div class="step">
+  <div class="step-header">
+    <div class="step-num">6</div>
+    <div class="step-title">Configure the Grandstream</div>
+  </div>
+  <p>Open a browser and go to: <strong><a id="gs-url" href="#" target="_blank"></a></strong></p>
+  <p>Login: username <code>admin</code>, password is printed on the sticker on the bottom of the device.</p>
+  <p>Go to the <strong>FXS PORT1</strong> tab and set these values:</p>
+
+  <table class="cost-table" id="gs-settings-table">
+    <tr><th>Setting</th><th>Value</th></tr>
+    <tr><td>Primary SIP Server</td><td><code id="gs-sip-server"></code></td></tr>
+    <tr><td>Prefer Primary SIP Server</td><td><code>Yes</code></td></tr>
+    <tr><td>Outbound Proxy</td><td><code id="gs-outbound-proxy"></code></td></tr>
+    <tr><td>NAT Traversal</td><td><code>Keep-Alive</code></td></tr>
+    <tr><td>SIP User ID</td><td><code id="gs-sip-user"></code></td></tr>
+    <tr><td>Authenticate ID</td><td><code id="gs-auth-id"></code></td></tr>
+    <tr><td>Authenticate Password</td><td><code id="gs-auth-pass"></code></td></tr>
+    <tr><td>Name</td><td>Caller ID name (optional, use CAPS for best display)</td></tr>
+    <tr><td>DNS Mode</td><td><code>A Record</code></td></tr>
+    <tr><td>SIP Registration</td><td><code>Yes</code></td></tr>
+    <tr><td>Unregister On Reboot</td><td><code>No</code></td></tr>
+    <tr><td>Outgoing Call Without Registration</td><td><code>Yes</code></td></tr>
+    <tr><td>Register Expiration</td><td><code>5</code></td></tr>
+    <tr><td>Local RTP Port</td><td><code>10000</code></td></tr>
+    <tr><td>Enable SIP OPTIONS/NOTIFY Keep Alive</td><td><code>OPTIONS</code></td></tr>
+    <tr><td>Allow Incoming SIP Messages from SIP Proxy Only</td><td><code>Yes</code></td></tr>
+    <tr><td>Preferred DTMF method</td><td><code>In-audio, RFC2833</code></td></tr>
+    <tr><td>Use P-Access-Network-Info Header</td><td><code>No</code></td></tr>
+    <tr><td>Use P-Emergency-info Header</td><td><code>No</code></td></tr>
+    <tr><td>Enable Call Features</td><td><code>No</code></td></tr>
+    <tr><td>Dial Plan</td><td><code>{[x*]+}</code></td></tr>
+    <tr><td>Preferred Vocoder</td><td><code>PCMU, PCMA, G729</code></td></tr>
+    <tr><td>SUBSCRIBE for MWI</td><td><code>Yes</code></td></tr>
+  </table>
+
+  <h3 style="margin-top: 20px;">Enable Call Encryption (recommended)</h3>
+  <p>Still on the FXS PORT1 page, also set:</p>
+  <table class="cost-table">
+    <tr><th>Setting</th><th>Value</th></tr>
+    <tr><td>SIP Transport</td><td><code>TLS</code></td></tr>
+    <tr><td>SRTP Mode</td><td><code>Enabled and Forced</code></td></tr>
+    <tr><td>Local SIP Port</td><td><code>5061</code></td></tr>
+  </table>
+
+  <h3 style="margin-top: 20px;">Block unwanted direct IP calls (recommended)</h3>
+  <table class="cost-table">
+    <tr><th>Setting</th><th>Value</th></tr>
+    <tr><td>Check SIP User ID for incoming INVITE</td><td><code>Yes</code></td></tr>
+    <tr><td>Allow Incoming SIP Messages from SIP Proxy Only</td><td><code>Yes</code> (already set above)</td></tr>
+  </table>
+
+  <p style="margin-top: 16px;">Click <strong>Update</strong>, then click <strong>Reboot</strong>. Wait at least 30 seconds. The <strong>Phone 1</strong> LED should turn <strong style="color: var(--accent);">solid blue</strong> (registered). Pick up the phone — you should hear a dial tone.</p>
+  <p style="margin-top: 8px; font-size: 13px; color: var(--muted);">If the light stays off: double-check SIP User ID and password. The SIP User ID format is <code>your_voipms_account_subaccount</code> (with an underscore). Also verify Primary SIP Server matches the server you selected in voip.ms.</p>
+
+  <p style="margin-top: 12px; font-size: 13px; color: var(--muted);"><strong>Dialing:</strong> Area code + number for US/Canada. For international: 011 + country code + number.</p>
+</div>
+</div>
+
+</div><!-- /section-grandstream -->
+
+<!-- ===== DONE ===== -->
+<div id="section-done" class="hidden">
+<h2>You're Done</h2>
+<div class="step">
+  <div class="step-header">
+    <div class="step-num">✓</div>
+    <div class="step-title">Test it</div>
+  </div>
+  <ul class="checklist">
+    <li>Pick up the phone — hear dial tone</li>
+    <li>Call the new number from your cell — the phone should ring</li>
+    <li>Call your cell from the new phone — it should work</li>
+    <li>Leave a voicemail — check email for recording</li>
+  </ul>
+</div>
+
+<h3>Optional: Parental Controls</h3>
+<p>In your <a href="https://voip.ms" target="_blank">voip.ms</a> account, you can:</p>
+<ul style="padding-left: 20px; font-size: 14px;">
+  <li><strong>CallerID Filtering:</strong> Whitelist only approved numbers</li>
+  <li><strong>Time Conditions:</strong> Block calls during bedtime or school hours</li>
+  <li><strong>Call Detail Records:</strong> See who called and for how long</li>
+</ul>
+
+<h3>Good to Know</h3>
+<ul style="padding-left: 20px; font-size: 14px;">
+  <li>Phone won't work during power or internet outages</li>
+  <li>Slight voice delay is normal for VoIP — kids won't notice</li>
+  <li>Monthly cost is usually under $5 for a kid's usage</li>
+</ul>
+</div>
+
+<p style="margin-top: 60px; font-size: 12px; color: var(--muted); text-align: center;">
+  Inspired by <a href="https://tech.chrishardie.com/2025/landline-phone-kids/" target="_blank">Chris Hardie's guide</a>. This page runs entirely in your browser — your credentials are never sent anywhere except directly to the voip.ms API.
+</p>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var API = 'https://voip.ms/api/v1/rest.php';
+  var creds = {};
+  var state = { servers: [], selectedServer: null, subAccount: null, didNumber: null };
+
+  function updateProgress(step) {
+    for (var i = 1; i <= 6; i++) {
+      var dot = document.getElementById('prog-' + i);
+      if (dot) dot.className = i <= step ? 'prog-dot active' : 'prog-dot';
+    }
+    var labels = ['Shopping list', 'VoIP.ms account', 'API connection', 'Phone line setup', 'Grandstream config', 'Testing'];
+    var el = document.getElementById('prog-label');
+    if (el) el.textContent = 'Step ' + step + ' of 6 — ' + labels[step - 1];
+  }
+
+  function show(id) { document.getElementById(id).classList.remove('hidden'); }
+  function hide(id) { document.getElementById(id).classList.add('hidden'); }
+
+  function showResult(id, msg, type) {
+    var el = document.getElementById(id);
+    el.textContent = msg;
+    el.className = 'result ' + type;
+    el.classList.remove('hidden');
+  }
+
+  function apiCall(method, params) {
+    params = params || {};
+    params.api_username = creds.user;
+    params.api_password = creds.pass;
+    params.method = method;
+    var qs = Object.keys(params).map(function(k) { return k + '=' + encodeURIComponent(params[k]); }).join('&');
+    return fetch(API + '?' + qs).then(function(r) { return r.json(); });
+  }
+
+  window.testApi = function() {
+    creds.user = document.getElementById('api-user').value.trim();
+    creds.pass = document.getElementById('api-pass').value.trim();
+    if (!creds.user || !creds.pass) { showResult('api-result', 'Enter both fields.', 'error'); return; }
+
+    document.getElementById('btn-test-api').disabled = true;
+    document.getElementById('btn-test-api').textContent = 'Connecting...';
+
+    apiCall('getBalance').then(function(data) {
+      document.getElementById('btn-test-api').disabled = false;
+      document.getElementById('btn-test-api').textContent = 'Test Connection';
+      if (data.status === 'success') {
+        showResult('api-result', 'Connected. Balance: $' + data.balance.current_balance, 'success');
+        updateProgress(3);
+        loadServers();
+        show('section-setup');
+      } else {
+        showResult('api-result', 'Failed: ' + (data.message || data.status) + '. Make sure you\'re using your API password (set under SOAP and REST/JSON API), not your login password.', 'error');
+      }
+    }).catch(function(e) {
+      document.getElementById('btn-test-api').disabled = false;
+      document.getElementById('btn-test-api').textContent = 'Test Connection';
+      showResult('api-result', 'Network error. VoIP.ms may block browser requests — see note below.', 'error');
+    });
+  };
+
+  function loadServers() {
+    apiCall('getServersInfo').then(function(data) {
+      if (data.status === 'success') {
+        state.servers = data.servers;
+        var sel = document.getElementById('server-select');
+        sel.innerHTML = '<option value="">Select a server...</option>';
+        data.servers.forEach(function(s) {
+          var opt = document.createElement('option');
+          opt.value = s.server_pop;
+          opt.textContent = s.server_name + ' (' + s.server_hostname + ')';
+          sel.appendChild(opt);
+        });
+      }
+    });
+  }
+
+  window.searchDids = function() {
+    var areaCode = document.getElementById('area-code').value.trim();
+    var pop = document.getElementById('server-select').value;
+    if (!areaCode || areaCode.length !== 3) { alert('Enter a 3-digit area code.'); return; }
+    if (!pop) { alert('Select a server first.'); return; }
+
+    document.getElementById('btn-search-dids').disabled = true;
+    document.getElementById('btn-search-dids').textContent = 'Searching...';
+
+    apiCall('getDIDsUSA', { state: areaCode }).then(function(data) {
+      document.getElementById('btn-search-dids').disabled = false;
+      document.getElementById('btn-search-dids').textContent = 'Search Available Numbers';
+      if (data.status === 'success' && data.dids && data.dids.length > 0) {
+        var sel = document.getElementById('did-select');
+        sel.innerHTML = '';
+        data.dids.slice(0, 20).forEach(function(d) {
+          var opt = document.createElement('option');
+          opt.value = d.did;
+          opt.textContent = d.did.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3') + ' — $' + d.monthly + '/mo';
+          sel.appendChild(opt);
+        });
+        show('did-results');
+      } else {
+        alert('No numbers found for area code ' + areaCode + '. Try another.');
+      }
+    }).catch(function() {
+      document.getElementById('btn-search-dids').disabled = false;
+      document.getElementById('btn-search-dids').textContent = 'Search Available Numbers';
+      alert('Search failed. Check your API connection.');
+    });
+  };
+
+  window.createLine = function() {
+    var did = document.getElementById('did-select').value;
+    var kidName = document.getElementById('kid-name').value.trim();
+    var vmEmail = document.getElementById('vm-email').value.trim();
+    var subPass = document.getElementById('sub-pass').value.trim();
+    var pop = document.getElementById('server-select').value;
+
+    if (!did || !kidName || !subPass) { alert('Fill in all fields.'); return; }
+
+    var subUsername = kidName.toLowerCase().replace(/[^a-z0-9]/g, '').substring(0, 10) + 'ph';
+    if (subUsername.length > 12) subUsername = subUsername.substring(0, 12);
+
+    document.getElementById('btn-create-line').disabled = true;
+    document.getElementById('btn-create-line').textContent = 'Creating...';
+
+    var steps = [];
+
+    // 1. Create sub-account
+    apiCall('createSubAccount', {
+      username: subUsername,
+      password: subPass,
+      protocol: 1,
+      auth_type: 1,
+      device_type: 2,
+      lock_international: 1,
+      description: kidName + ' Phone',
+      callerid_number: did,
+    }).then(function(data) {
+      if (data.status !== 'success') throw new Error('Sub-account: ' + (data.message || data.status));
+      steps.push('Sub-account "' + subUsername + '" created');
+      state.subAccount = subUsername;
+
+      // 2. Order DID
+      return apiCall('orderDID', {
+        did: did,
+        routing: 'account:' + creds.user.split('@')[0] + '_' + subUsername,
+        pop: pop,
+        dialtime: 60,
+        billing_type: 1,
+      });
+    }).then(function(data) {
+      if (data.status !== 'success') throw new Error('DID order: ' + (data.message || data.status));
+      steps.push('Phone number ' + did + ' ordered');
+      state.didNumber = did;
+
+      // 3. Create voicemail
+      return apiCall('createVoicemail', {
+        digits: '1',
+        name: kidName + ' Voicemail',
+        password: '1234',
+        skip_password: 'no',
+        attach_message: 'yes',
+        delete_message: 'no',
+        email: vmEmail || '',
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone.replace('/', '%2F') || 'US/Eastern',
+        language: 'en',
+      });
+    }).then(function(data) {
+      if (data.status !== 'success') steps.push('Voicemail: ' + (data.message || 'skipped'));
+      else steps.push('Voicemail created (PIN: 1234)');
+
+      // Done
+      document.getElementById('btn-create-line').disabled = false;
+      document.getElementById('btn-create-line').textContent = 'Create Phone Line';
+
+      var serverInfo = state.servers.find(function(s) { return s.server_pop == pop; });
+      state.selectedServer = serverInfo;
+
+      showResult('create-result', steps.join('\n') + '\n\nSub-account: ' + creds.user.split('@')[0] + '_' + subUsername + '\nPassword: ' + subPass + '\nSIP Server: ' + (serverInfo ? serverInfo.server_hostname : 'see voip.ms'), 'success');
+
+      updateProgress(4);
+      show('section-grandstream');
+      show('section-done');
+
+    }).catch(function(e) {
+      document.getElementById('btn-create-line').disabled = false;
+      document.getElementById('btn-create-line').textContent = 'Create Phone Line';
+      showResult('create-result', 'Error: ' + e.message + '\n\nCompleted: ' + steps.join(', '), 'error');
+    });
+  };
+
+  window.showGrandstreamConfig = function() {
+    var ip = document.getElementById('gs-ip').value.trim();
+    if (!ip) { alert('Enter the Grandstream IP address.'); return; }
+
+    var url = 'http://' + ip;
+    document.getElementById('gs-url').href = url;
+    document.getElementById('gs-url').textContent = url;
+
+    var server = state.selectedServer;
+    var hostname = server ? server.server_hostname : '[your-server].voip.ms';
+    var fullUser = creds.user ? creds.user.split('@')[0] + '_' + (state.subAccount || '[subaccount]') : '[subaccount]';
+    var pass = document.getElementById('sub-pass').value || '[your-password]';
+
+    document.getElementById('gs-sip-server').textContent = hostname;
+    document.getElementById('gs-outbound-proxy').textContent = hostname;
+    document.getElementById('gs-sip-user').textContent = fullUser;
+    document.getElementById('gs-auth-id').textContent = fullUser;
+    document.getElementById('gs-auth-pass').textContent = pass;
+
+    show('gs-config');
+    updateProgress(5);
+  };
+
+  // Init
+  updateProgress(1);
+
+  // CORS warning
+  var warning = document.createElement('div');
+  warning.className = 'warning';
+  warning.innerHTML = '<strong>Note:</strong> VoIP.ms may block direct browser API calls (CORS). If the connection test fails, you can use the setup script instead:<br><br><code>curl "https://voip.ms/api/v1/rest.php?api_username=YOUR_EMAIL&api_password=YOUR_API_PASS&method=getBalance"</code><br><br>If that works from your terminal, the API steps below can be run via the command-line script at the bottom of this page.';
+  var apiStep = document.getElementById('btn-test-api');
+  apiStep.parentNode.appendChild(warning);
+
+})();
+</script>
+
+</body>
+</html>
