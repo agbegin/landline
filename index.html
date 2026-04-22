@@ -270,22 +270,20 @@
   Inspired by <a href="https://tech.chrishardie.com/2025/landline-phone-kids/" target="_blank">Chris Hardie</a><br>
   <span style="font-size: 11px;">This page runs in your browser — credentials go directly to voip.ms, nowhere else.</span>
   <div style="margin-top: 14px;">
-    <a id="tip-btn" href="lightning:bufftiger1@primal.net" style="display: inline-block; padding: 6px 14px; border: 1px solid var(--border); border-radius: 5px; font-size: 12px; font-family: 'IBM Plex Mono', monospace; color: var(--fg); text-decoration: none; cursor: pointer;">⚡ Tip sats</a>
+    <button id="tip-btn" style="display: inline-block; padding: 6px 14px; border: 1px solid var(--border); border-radius: 5px; font-size: 12px; font-family: 'IBM Plex Mono', monospace; color: var(--fg); background: transparent; cursor: pointer;">⚡ Tip sats</button>
     <div id="tip-qr" style="display:none; margin-top: 14px;">
       <canvas id="qr-canvas" style="display: block; margin: 0 auto; border-radius: 6px;"></canvas>
       <p style="font-size: 11px; margin-top: 6px;">Scan with any Lightning wallet</p>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
     <script>
-    document.getElementById('tip-btn').addEventListener('click', function(e) {
+    document.getElementById('tip-btn').addEventListener('click', function() {
       var qrDiv = document.getElementById('tip-qr');
       if (qrDiv.style.display === 'none') {
-        setTimeout(function() {
-          QRCode.toCanvas(document.getElementById('qr-canvas'), 'lightning:bufftiger1@primal.net', {
-            width: 200, margin: 2, color: { dark: '#2c2416', light: '#f5f0e8' }
-          });
-          qrDiv.style.display = 'block';
-        }, 1200);
+        QRCode.toCanvas(document.getElementById('qr-canvas'), 'lightning:bufftiger1@primal.net', {
+          width: 200, margin: 2, color: { dark: '#2c2416', light: '#f5f0e8' }
+        });
+        qrDiv.style.display = 'block';
       } else {
         qrDiv.style.display = 'none';
       }
