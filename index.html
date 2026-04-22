@@ -80,46 +80,14 @@
   <div class="prog-label" id="prog-label">Step 1 of 6 — Shopping list</div>
 </div>
 
-<!-- ===== STEP 1: SHOPPING LIST ===== -->
+<!-- ===== SHOPPING LIST ===== -->
 <h2>What You Need</h2>
-
-<div class="product">
-  <div class="product-info">
-    <div class="product-name">Grandstream HT802</div>
-    <div class="product-desc">2-port analog telephone adapter. Turns your internet into a phone line.</div>
-  </div>
-  <div class="product-price"><a href="https://www.amazon.com/dp/B01JH7MWKM" target="_blank">$46 →</a></div>
-</div>
-<div class="product">
-  <div class="product-info">
-    <div class="product-name">Push-button phone</div>
-    <div class="product-desc">Any corded push-button phone. Not a VoIP phone — just a regular one. <a href="https://www.etsy.com/market/vintage_touchtone_phones" target="_blank">Vintage touchtone phones on Etsy →</a></div>
-  </div>
-  <div class="product-price">~$14</div>
-</div>
-<div class="product">
-  <div class="product-info">
-    <div class="product-name">Ethernet cable</div>
-    <div class="product-desc">To connect the Grandstream to your router. You probably have one.</div>
-  </div>
-  <div class="product-price">$0–8</div>
-</div>
-<div class="product">
-  <div class="product-info">
-    <div class="product-name">VoIP.ms account</div>
-    <div class="product-desc">The phone service. Pay-as-you-go. Add $10 to start.</div>
-  </div>
-  <div class="product-price"><a href="https://voip.ms" target="_blank">voip.ms →</a></div>
-</div>
-
-<table class="cost-table">
-  <tr><th>Item</th><th>One-time</th><th>Monthly</th></tr>
-  <tr><td>Hardware</td><td>~$62</td><td>—</td></tr>
-  <tr><td>Phone number (DID)</td><td>$0.40</td><td>$0.85</td></tr>
-  <tr><td>E911 (optional, recommended)</td><td>$1.50</td><td>$1.50</td></tr>
-  <tr><td>Call minutes</td><td>—</td><td>~$1–3</td></tr>
-  <tr class="total"><td>Total</td><td>~$64</td><td>~$3–5</td></tr>
-</table>
+<ul style="padding-left: 20px; font-size: 14px; line-height: 1.8;">
+  <li><a href="https://www.amazon.com/dp/B01JH7MWKM" target="_blank">Grandstream HT802</a> — telephone adapter (~$46)</li>
+  <li><a href="https://www.etsy.com/market/vintage_touchtone_phones" target="_blank">A corded push-button phone</a> — any cheap one, NOT a VoIP phone</li>
+  <li>Ethernet cable to your router</li>
+  <li><a href="https://voip.ms" target="_blank">VoIP.ms account</a> — pay-as-you-go, add $10 to start</li>
+</ul>
 
 <!-- ===== STEP 2: VOIP.MS ACCOUNT ===== -->
 <h2>Step 1 — VoIP.ms Account</h2>
@@ -157,7 +125,7 @@
   <div id="api-result" class="result hidden"></div>
 </div>
 
-<div id="section-setup" class="hidden">
+<div id="section-setup">
 
 <div class="step">
   <div class="step-header">
@@ -208,7 +176,7 @@
 </div><!-- /section-setup -->
 
 <!-- ===== STEP 4: GRANDSTREAM ===== -->
-<div id="section-grandstream" class="hidden">
+<div id="section-grandstream">
 <h2>Step 3 — Configure the Grandstream<span class="manual-badge">Hands-on</span></h2>
 
 <div class="step">
@@ -292,7 +260,7 @@
 </div><!-- /section-grandstream -->
 
 <!-- ===== DONE ===== -->
-<div id="section-done" class="hidden">
+<div id="section-done">
 <h2>You're Done</h2>
 <div class="step">
   <div class="step-header">
@@ -381,7 +349,6 @@
         showResult('api-result', 'Connected. Balance: $' + data.balance.current_balance, 'success');
         updateProgress(3);
         loadServers();
-        show('section-setup');
       } else {
         showResult('api-result', 'Failed: ' + (data.message || data.status) + '. Make sure you\'re using your API password (set under SOAP and REST/JSON API), not your login password.', 'error');
       }
@@ -511,8 +478,6 @@
       showResult('create-result', steps.join('\n') + '\n\nSub-account: ' + creds.user.split('@')[0] + '_' + subUsername + '\nPassword: ' + subPass + '\nSIP Server: ' + (serverInfo ? serverInfo.server_hostname : 'see voip.ms'), 'success');
 
       updateProgress(4);
-      show('section-grandstream');
-      show('section-done');
 
     }).catch(function(e) {
       document.getElementById('btn-create-line').disabled = false;
